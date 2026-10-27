@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vinyl Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Платівки</h1>
+    <ul id="list"></ul>
+
+    <script>
+        fetch('http://127.0.0.1:8000/api/albums/')
+            .then(response => response.json())
+            .then(albums => {
+                if (albums.length === 0) {
+                    document.getElementById('list').innerHTML = '<li>Платівок поки немає</li>';
+                }
+                albums.forEach(album => {
+                    document.getElementById('list').innerHTML +=
+                        '<li>' + album.title + ' - ' + album.price + ' грн</li>';
+                });
+            })
+            .catch(error => {
+                document.getElementById('list').innerHTML = '<li>Помилка: ' + error + '</li>';
+            });
+    </script>
+</body>
+</html>
